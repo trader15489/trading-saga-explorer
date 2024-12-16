@@ -3,9 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MarketWatch } from "@/components/MarketWatch";
-import { OrderForm } from "@/components/OrderForm";
-import { Portfolio } from "@/components/Portfolio";
+import { TradingDashboard } from "@/components/TradingDashboard";
 import { FyersAPI } from "@/lib/fyers-api";
 import { toast } from "sonner";
 
@@ -22,8 +20,6 @@ const Index = () => {
   const handleLogin = () => {
     try {
       const fyersApi = new FyersAPI(credentials);
-      // In a real app, you would handle the OAuth flow here
-      // For demo purposes, we're just initializing the API client
       setApi(fyersApi);
       setIsAuthenticated(true);
       toast.success("Successfully connected to Fyers!");
@@ -85,17 +81,7 @@ const Index = () => {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-trading-background text-white p-4">
-      <div className="max-w-7xl mx-auto space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <MarketWatch api={api!} />
-          <OrderForm api={api!} />
-        </div>
-        <Portfolio api={api!} />
-      </div>
-    </div>
-  );
+  return api ? <TradingDashboard api={api} /> : null;
 };
 
 export default Index;
